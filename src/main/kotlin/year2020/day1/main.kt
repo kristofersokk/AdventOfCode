@@ -3,7 +3,7 @@ package year2020.day1
 import java.io.File
 
 fun main() {
-    val file = File("src/main/resources/expensereport.txt")
+    val file = File("src/main/resources/2020-day1.txt")
     val input = file.readLines()
         .filter { it.isNotEmpty() }
         .mapNotNull { it.toIntOrNull() }
