@@ -3,7 +3,7 @@ package year2020.day5
 import java.io.File
 
 fun main() {
-    val file = File("src/main/resources/2020-day5.txt")
+    val file = File("src/main/resources/2020/2020-day5.txt")
     val lines = file.readLines()
     val boardingPasses = lines.map { line ->
         val r = line.substring(0 until 7)

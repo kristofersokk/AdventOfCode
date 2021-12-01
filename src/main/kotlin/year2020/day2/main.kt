@@ -3,7 +3,7 @@ package year2020.day2
 import java.io.File
 
 fun main() {
-    val file = File("src/main/resources/2020-day2.txt")
+    val file = File("src/main/resources/2020/2020-day2.txt")
     val lines = file.readLines()
 
     val result1 = lines.count { line ->

@@ -3,7 +3,7 @@ package year2020.day3
 import java.io.File
 
 fun main() {
-    val file = File("src/main/resources/2020-day3.txt")
+    val file = File("src/main/resources/2020/2020-day3.txt")
     val lines = file.readLines()
 
     val width = lines[0].length

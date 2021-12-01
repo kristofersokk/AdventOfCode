@@ -6,7 +6,7 @@ import java.math.BigInteger
 data class Bag(val name: String, val containedBags: Map<String, Int>)
 
 fun main() {
-    val file = File("src/main/resources/2020-day7.txt")
+    val file = File("src/main/resources/2020/2020-day7.txt")
     val lines = file.readLines()
     val bags = mutableMapOf<String, Bag>()
     lines.forEach { line ->

@@ -3,7 +3,7 @@ package year2020.day4
 import java.io.File
 
 fun main() {
-    val file = File("src/main/resources/2020-day4.txt")
+    val file = File("src/main/resources/2020/2020-day4.txt")
     val fileStr = file.readText()
     val requiredFields = arrayOf<Pair<String, (String) -> Boolean>>(
         "byr" to { it.matches("\\d{4}".toRegex()) && it.toInt() in 1920..2002 },

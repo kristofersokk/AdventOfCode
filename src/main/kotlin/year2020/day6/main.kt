@@ -3,7 +3,7 @@ package year2020.day6
 import java.io.File
 
 fun main() {
-    val file = File("src/main/resources/2020-day6.txt")
+    val file = File("src/main/resources/2020/2020-day6.txt")
     val groups = file.readText().replace("\r", "")
         .split("\n\n")
 
