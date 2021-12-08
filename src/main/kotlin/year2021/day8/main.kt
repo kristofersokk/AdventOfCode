@@ -21,12 +21,12 @@ private suspend fun SequenceScope<Map<Char, Char>>.fillMapping(currentMap: Map<C
     }
 }
 
-fun generateMappingSequence(): Sequence<Map<Char, Char>> =
+private fun generateMappingSequence(): Sequence<Map<Char, Char>> =
     sequence {
         fillMapping(mapOf())
     }
 
-fun get7DiodeDisplayNumber(input: Set<Char>): Int? = when (input) {
+private fun get7DiodeDisplayNumber(input: Set<Char>): Int? = when (input) {
     setOf('a', 'b', 'c', 'e', 'f', 'g') -> 0
     setOf('c', 'f') -> 1
     setOf('a', 'c', 'd', 'e', 'g') -> 2
