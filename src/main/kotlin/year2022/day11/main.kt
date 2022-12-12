@@ -92,13 +92,13 @@ fun main() {
             val operation = when (operationStrs[1]) {
                 "*" ->
                     if (operationStrs[2] == "old") {
-                        { item: Item -> item.multiplyByItself() }
+                        { monkeyItem: MonkeyItem -> monkeyItem.multiplyByItself() }
                     } else {
-                        { item: Item -> item.multiplyBy(operationStrs[2].toInt()) }
+                        { monkeyItem: MonkeyItem -> monkeyItem.multiplyBy(operationStrs[2].toInt()) }
                     }
 
                 "+" ->
-                    { item: Item -> item.addBy(operationStrs[2].toInt()) }
+                    { monkeyItem: MonkeyItem -> monkeyItem.addBy(operationStrs[2].toInt()) }
 
                 else -> throw IllegalArgumentException("Unknown operation: ${operationStrs[1]}")
             }
@@ -121,7 +121,7 @@ fun main() {
         fileParts.forEachIndexed { partIndex, part ->
             val lines = part.split("\r?\n".toRegex())
             val itemsInts = lines[1].substringAfter(": ").split(", ").map { it.toInt() }
-            val items = itemsInts.map { Item(it, divisers) }.toMutableList()
+            val items = itemsInts.map { MonkeyItem(it, divisers) }.toMutableList()
             monkeys[partIndex].items = items
         }
 
@@ -157,7 +157,6 @@ fun main() {
         println("Result 2: $result2")
     }
 
-
     println("Development time: 3h3m10s")
 }
 
@@ -179,15 +178,15 @@ private data class Monkey(
 
 private data class Monkey2(
     val index: Int,
-    val operation: (Item) -> Unit,
+    val operation: (MonkeyItem) -> Unit,
     val divisibilityTest: Int,
     val divisibilityTrueMonkeyIndex: Int,
     val divisibilityFalseMonkeyIndex: Int,
     var interactions: Int = 0,
-    var items: MutableList<Item> = mutableListOf(),
+    var items: MutableList<MonkeyItem> = mutableListOf(),
 )
 
-private class Item(initValue: Int, divisionTests: List<Int>) {
+private class MonkeyItem(initValue: Int, divisionTests: List<Int>) {
     val divisionTestsModulos = mutableMapOf<Int, Int>()
 
     init {
