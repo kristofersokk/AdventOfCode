@@ -42,7 +42,7 @@ private fun Iterable<Int>.multiply(): Int {
 }
 
 private fun stringToDistressSignalEl(input: String): DistressSignalEl {
-    println("Converting \"$input\"")
+//    println("Converting \"$input\"")
     if (input.startsWith("[")) {
         val items = mutableListOf<DistressSignalEl>()
         val commaLocations = mutableListOf<Int>()
