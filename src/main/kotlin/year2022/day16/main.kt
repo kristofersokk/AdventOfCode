@@ -150,8 +150,9 @@ fun main() {
     println("Result2: $maxPressureWithElephant")
 
     println()
-    println("Development time: 3h48m25s")
+    println("Development time: 3h48m")
     println("Should have done dynamic programming not naive recursion")
+    println("Part 2 took 30m to calculate")
 }
 
 private data class Valve(
