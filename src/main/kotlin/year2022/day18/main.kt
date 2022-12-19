@@ -1,9 +1,12 @@
 package year2022.day18
 
+import java.io.File
 import kotlin.math.abs
 
+private typealias Vec3 = Triple<Int, Int, Int>
+
 fun main() {
-    val file = java.io.File("src/main/resources/2022/2022-day18.txt")
+    val file = File("src/main/resources/2022/2022-day18.txt")
     val lines = file.readLines()
 
     // 2,2,2
@@ -29,7 +32,7 @@ fun main() {
 
     println("Result1: ${openSides.size}")
 
-    var surfaces = mutableListOf<MutableSet<Pair<Triple<Int, Int, Int>, Triple<Int, Int, Int>>>>()
+    var surfaces = mutableListOf<MutableSet<Pair<Vec3, Vec3>>>()
 
     openSides.forEach { openSide ->
         val (openSideCube, openSideVector) = openSide
@@ -37,9 +40,9 @@ fun main() {
 
         val connectedSides = mutableListOf(openSide)
         fun computeConnectedSides(
-            startCube: Triple<Int, Int, Int>,
-            mainVector: Triple<Int, Int, Int>,
-            sideVector: Triple<Int, Int, Int>
+            startCube: Vec3,
+            mainVector: Vec3,
+            sideVector: Vec3,
         ) {
             if (startCube + mainVector + sideVector in cubes) {
                 connectedSides.add(startCube + mainVector + sideVector to sideVector.inverted())
@@ -129,8 +132,8 @@ fun main() {
     println("Development time: 55m")
 }
 
-private operator fun Triple<Int, Int, Int>.plus(other: Triple<Int, Int, Int>) =
+private operator fun Vec3.plus(other: Vec3) =
     Triple(first + other.first, second + other.second, third + other.third)
 
-private fun Triple<Int, Int, Int>.inverted() =
+private fun Vec3.inverted() =
     Triple(-first, -second, -third)
