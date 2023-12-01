@@ -1,5 +1,5 @@
 plugins {
-    kotlin("jvm") version "1.7.21"
+    kotlin("jvm") version "1.9.21"
 }
 
 group = "org.example"
@@ -10,6 +10,6 @@ repositories {
 }
 
 dependencies {
-    implementation("org.jetbrains.kotlin:kotlin-stdlib:1.7.0")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.5.2-native-mt")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib:1.8.10")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.6.4")
 }
