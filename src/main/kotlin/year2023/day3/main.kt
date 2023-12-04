@@ -2,11 +2,11 @@ package year2023.day3
 
 import java.io.File
 
-data class Location(val x: Int, val y: Int)
+private data class Location(val x: Int, val y: Int)
 
-infix fun Int.loc(y: Int) = Location(this, y)
+private infix fun Int.loc(y: Int) = Location(this, y)
 
-typealias Part = Pair<Int, Location>
+private typealias Part = Pair<Int, Location>
 
 fun main() {
 
