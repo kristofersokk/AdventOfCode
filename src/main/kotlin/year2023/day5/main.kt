@@ -5,9 +5,6 @@ import kotlin.math.roundToInt
 
 private typealias Mapping = Triple<Long, Long, Long>
 
-private fun Number.simpleFormat() =
-    this.toString().reversed().chunked(3).joinToString(separator = "_").reversed()
-
 fun main() {
     val file = File("src/main/resources/2023/2023-day5.txt")
     val lines = file.readLines()
@@ -24,15 +21,23 @@ fun main() {
         parts[0] to parts[1] to ranges
     }
 
+    val seedToSoilMap = maps["seed" to "soil"]!!
+    val soilToFertilizerMap = maps["soil" to "fertilizer"]!!
+    val fertilizerToWaterMap = maps["fertilizer" to "water"]!!
+    val waterToLightMap = maps["water" to "light"]!!
+    val lightToTemperatureMap = maps["light" to "temperature"]!!
+    val temperatureToHumidityMap = maps["temperature" to "humidity"]!!
+    val humidityToLocationMap = maps["humidity" to "location"]!!
+
     val locations = seeds
         .asSequence()
-        .map { seed -> maps["seed" to "soil"]!!.resolveRange(seed) }
-        .map { seed -> maps["soil" to "fertilizer"]!!.resolveRange(seed) }
-        .map { seed -> maps["fertilizer" to "water"]!!.resolveRange(seed) }
-        .map { seed -> maps["water" to "light"]!!.resolveRange(seed) }
-        .map { seed -> maps["light" to "temperature"]!!.resolveRange(seed) }
-        .map { seed -> maps["temperature" to "humidity"]!!.resolveRange(seed) }
-        .map { seed -> maps["humidity" to "location"]!!.resolveRange(seed) }
+        .map { seed -> seedToSoilMap.resolveRange(seed) }
+        .map { seed -> soilToFertilizerMap.resolveRange(seed) }
+        .map { seed -> fertilizerToWaterMap.resolveRange(seed) }
+        .map { seed -> waterToLightMap.resolveRange(seed) }
+        .map { seed -> lightToTemperatureMap.resolveRange(seed) }
+        .map { seed -> temperatureToHumidityMap.resolveRange(seed) }
+        .map { seed -> humidityToLocationMap.resolveRange(seed) }
         .toList()
 
     val result1 = locations.min()
@@ -41,22 +46,23 @@ fun main() {
     val result2Size = seeds.chunked(2).sumOf { it[1] }
     var currentResult2Count = 0L
 
-    println(result2Size.simpleFormat())
+    println()
+    println(result2Size.simpleFormat() + " possible seeds")
 
     val result2 = seeds.chunked(2)
         .asSequence()
         .flatMap { it[0] until it[0] + it[1] }
-        .map { seed -> maps["seed" to "soil"]!!.resolveRange(seed) }
-        .map { seed -> maps["soil" to "fertilizer"]!!.resolveRange(seed) }
-        .map { seed -> maps["fertilizer" to "water"]!!.resolveRange(seed) }
-        .map { seed -> maps["water" to "light"]!!.resolveRange(seed) }
-        .map { seed -> maps["light" to "temperature"]!!.resolveRange(seed) }
-        .map { seed -> maps["temperature" to "humidity"]!!.resolveRange(seed) }
-        .map { seed -> maps["humidity" to "location"]!!.resolveRange(seed) }
+        .map { seed -> seedToSoilMap.resolveRange(seed) }
+        .map { seed -> soilToFertilizerMap.resolveRange(seed) }
+        .map { seed -> fertilizerToWaterMap.resolveRange(seed) }
+        .map { seed -> waterToLightMap.resolveRange(seed) }
+        .map { seed -> lightToTemperatureMap.resolveRange(seed) }
+        .map { seed -> temperatureToHumidityMap.resolveRange(seed) }
+        .map { seed -> humidityToLocationMap.resolveRange(seed) }
         .map {
             currentResult2Count++
-            if (currentResult2Count % 10000000L == 0L) {
-                println("Result2: ${(currentResult2Count.toDouble() / result2Size * 1000.0).roundToInt() / 10}%")
+            if (currentResult2Count % 100000L == 0L) {
+                print("Result2: ${(currentResult2Count.toDouble() / result2Size * 1000.0).roundToInt() / 10.0}%\r")
             }
             it
         }
@@ -64,6 +70,9 @@ fun main() {
 
     println("Result2: $result2")
 }
+
+private fun Number.simpleFormat() =
+    this.toString().reversed().chunked(3).joinToString(separator = "_").reversed()
 
 private fun List<Mapping>.resolveRange(
     seed: Long
