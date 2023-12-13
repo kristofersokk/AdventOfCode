@@ -9,51 +9,46 @@ fun main() {
 
     val patterns = text.split("\r?\n\r?\n".toRegex()).map { it.split("\r?\n".toRegex()) }
 
-    val result1 = patterns.sumOf { pattern ->
-        val horizontalMirror = findPossibleHorizontalMirror(pattern)
-        if (horizontalMirror != null)
-            return@sumOf 100L * (horizontalMirror + 1)
-
-        val transposedPattern = pattern.first().indices.map { index ->
-            pattern.map { it[index] }.joinToString("")
-        }
-        val verticalMirror = findPossibleHorizontalMirror(transposedPattern)
-        if (verticalMirror != null)
-            return@sumOf verticalMirror.toLong() + 1
-        0L
-    }
+    val result1 = findSumOfPatternValues(patterns, ::findPossibleHorizontalMirror)
 
     println("Part 1: $result1")
 
-    val result2 = patterns.sumOf { pattern ->
-        val horizontalMirror = findPossibleHorizontalMirrorWithSmudge(pattern)
-        if (horizontalMirror != null)
-            return@sumOf 100L * (horizontalMirror + 1)
-
-        val transposedPattern = pattern.first().indices.map { index ->
-            pattern.map { it[index] }.joinToString("")
-        }
-        val verticalMirror = findPossibleHorizontalMirrorWithSmudge(transposedPattern)
-        if (verticalMirror != null)
-            return@sumOf verticalMirror.toLong() + 1
-        0L
-    }
+    val result2 = findSumOfPatternValues(patterns, ::findPossibleHorizontalMirrorWithSmudge)
 
     println("Part 2: $result2")
 
+}
+
+private fun findSumOfPatternValues(
+    patterns: List<List<String>>,
+    mirrorDetector: (List<String>) -> Int?
+) = patterns.sumOf { pattern ->
+    val horizontalMirror = mirrorDetector(pattern)
+    if (horizontalMirror != null)
+        return@sumOf 100L * (horizontalMirror + 1)
+
+    val transposedPattern = pattern.first().indices.map { index ->
+        pattern.map { it[index] }.joinToString("")
+    }
+    val verticalMirror = mirrorDetector(transposedPattern)
+    if (verticalMirror != null)
+        return@sumOf verticalMirror.toLong() + 1
+    0L
 }
 
 private fun findPossibleHorizontalMirror(pattern: List<String>): Int? {
     val lineHashes = pattern.map { it.hashCode() }
     val verticalMirror = (0 until lineHashes.size - 1).firstNotNullOfOrNull { index ->
         val reflectionWidth = min(
-            index + 1,
-            lineHashes.size - index - 1
+            index + 1, lineHashes.size - index - 1
         )
         val isReflection = (1..reflectionWidth).all { width ->
             lineHashes[index - width + 1] == lineHashes[index + width]
         }
-        if (isReflection) index else null
+        if (isReflection)
+            index
+        else
+            null
     }
     return verticalMirror
 }
