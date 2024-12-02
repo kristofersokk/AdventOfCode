@@ -1,4 +1,4 @@
-package year2024.day2
+package year2024
 
 import java.io.File
 
