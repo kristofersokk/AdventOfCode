@@ -26,7 +26,7 @@ fun main() {
 
     println("Result 1: $result1")
 
-    val incorrectlyOrderedUpdates = updates.filter() { update ->
+    val incorrectlyOrderedUpdates = updates.filter { update ->
         for (i in 0..<update.indices.last) {
             for (j in i + 1..update.indices.last) {
                 if ("${update[j]}|${update[i]}" in rules) {
