@@ -14,9 +14,9 @@ fun main() {
                 .map { x ->
                     lines
                         .map { it[x] }
-                        .let {
-                            it.dropLast(1).map { it.toBigInteger() }.reduce(
-                                when (it.last().first()) {
+                        .let { problem ->
+                            problem.dropLast(1).map { it.toBigInteger() }.reduce(
+                                when (problem.last().first()) {
                                     '+' -> BigInteger::plus
                                     else -> BigInteger::times
                                 }
