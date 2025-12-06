@@ -7,19 +7,24 @@ fun main() {
     val file = File("src/main/resources/2025/2025-day6.txt")
     val lines = file.readLines()
 
-    val numberLines = lines.dropLast(1).map { it.trim().split("\\s+".toRegex()).map { it.toBigInteger() } }
-    val operators = lines.last().trim().split("\\s+".toRegex()).map { it.first() }
-
-    val result1 = numberLines.first().indices
-        .map { x ->
-            numberLines.map { it[x] }.reduce(
-                when (operators[x]) {
-                    '+' -> BigInteger::plus
-                    else -> BigInteger::times
+    val result1 = lines
+        .map { it.trim().split("\\s+".toRegex()) }
+        .let { lines ->
+            lines.first().indices
+                .map { x ->
+                    lines
+                        .map { it[x] }
+                        .let {
+                            it.dropLast(1).map { it.toBigInteger() }.reduce(
+                                when (it.last().first()) {
+                                    '+' -> BigInteger::plus
+                                    else -> BigInteger::times
+                                }
+                            )
+                        }
                 }
-            )
+                .reduce(BigInteger::plus)
         }
-        .reduce(BigInteger::plus)
 
     println("result1: $result1")
 
